@@ -12,6 +12,12 @@
     }
     window.scrollTo(0, 0);
 
+    const navbar = document.getElementById("mainNav");
+    setTimeout(() => {
+      navbar.style.transform = "translate(-50%, 0)";
+      navbar.style.opacity = "1";
+    }, 2200);
+
     /*Text Loading From Left Side Animation*/
 
       document.querySelectorAll('.textLoad').forEach(el => {
@@ -46,14 +52,14 @@
     var scrollTop = $(this).scrollTop();
     var fadeDistance = 700;
 
-    // Apply parallax to video only
+    // Parallax
     $('#heroVideo').css({
       transform: 'translate(-50%, -50%) translateY(' + scrollTop * 0.4 + 'px)'
     });
 
-    // Fade in the black overlay
+    // Overlay Fade In
     var overlayOpacity = scrollTop / fadeDistance;
-    overlayOpacity = Math.max(0, Math.min(1, overlayOpacity)); // Clamp between 0 and 1
+    overlayOpacity = Math.max(0, Math.min(1, overlayOpacity));
 
     $('.firstThing').css('opacity', overlayOpacity);
   });
