@@ -1,0 +1,105 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+::selection {
+  color: black;
+  background-color: hsl(0, 0%, 98%);
+}
+
+:root {
+  --textColor: hsl(0, 0%, 98%);
+  --textColorReverse: hsl(0, 0%, 2%);
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  background-color: hsl(0, 0%, 4%);
+  z-index: 2;
+  overflow: hidden;
+}
+
+#heroVideo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+  animation: videoFadeOut 61s ease-in infinite;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  color: var(--textColor);
+  font-size: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column !important;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.textLoad {
+  display: inline-block;
+}
+
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-20px) scale(0.8);
+  /*transition: all .2s ease-in-out;*/
+  animation: revealLetter 2.5s forwards;
+}/*
+.letter:hover {
+  font-weight: bold;
+}*/
+
+@keyframes revealLetter {
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes videoFadeOut {
+    0% {
+        opacity: 0;
+    }
+    3% {
+        opacity: 1;
+    }
+    91% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.section2 {
+    height: 1000px;
+    background-color: hsl(0, 0%, 10%);
+}
+
+h1 {
+    margin: 0;
+    font-size: 5rem;
+    color: var(--textColor);
+}
+
+.dropScroll {
+    opacity: 0;
+    transform: translateY(-40px);
+    transition: all .5s ease-in-out;
+}
+.dropShow {
+    opacity: 1;
+    transform: translateY(0);
+}
