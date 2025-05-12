@@ -1,3 +1,19 @@
+    $(window).scroll(function () {
+    var scrollTop = $(this).scrollTop();
+    var fadeDistance = 800;
+
+    // Parallax
+    $('#heroVideo').css({
+      transform: 'translate(-50%, -50%) translateY(' + scrollTop * 0.5 + 'px)'
+    });
+
+    // Overlay Fade In
+    var overlayOpacity = scrollTop / fadeDistance;
+    overlayOpacity = Math.max(0, Math.min(1, overlayOpacity));
+
+    $('.firstThing').css('opacity', overlayOpacity);
+  });
+  
   document.addEventListener("DOMContentLoaded", () => {
 
     const textLoad = document.querySelectorAll(".textLoad");
@@ -52,19 +68,3 @@
     dropElements.forEach(dropElement => observer2.observe(dropElement));
 
   })
-
-  $(window).scroll(function () {
-    var scrollTop = $(this).scrollTop();
-    var fadeDistance = 700;
-
-    // Parallax
-    $('#heroVideo').css({
-      transform: 'translate(-50%, -50%) translateY(' + scrollTop * 0.4 + 'px)'
-    });
-
-    // Overlay Fade In
-    var overlayOpacity = scrollTop / fadeDistance;
-    overlayOpacity = Math.max(0, Math.min(1, overlayOpacity));
-
-    $('.firstThing').css('opacity', overlayOpacity);
-  });
