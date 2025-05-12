@@ -1,5 +1,10 @@
   document.addEventListener("DOMContentLoaded", () => {
 
+    const textLoad = document.querySelectorAll(".textLoad");
+    textLoad.forEach(textSingleLoad => {
+      textSingleLoad.style.opacity = "1";
+    })
+
     const video = document.getElementById('heroVideo');
 
     video.addEventListener('ended', () => {

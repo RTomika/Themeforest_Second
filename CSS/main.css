@@ -82,6 +82,7 @@ body, html {
 
 .textLoad {
   display: inline-block;
+  opacity: 0;
 }
 
 .letter {
