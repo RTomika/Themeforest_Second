@@ -2,6 +2,22 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  background-color: var(--bgColor);
+  scrollbar-width: thin;
+  scrollbar-color: #d8d8d8 #1e1e1e;
+}
+
+/*Scrollbar*/
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8d8d8;
+  border-radius: 10px;
 }
 
 ::selection {
@@ -12,6 +28,34 @@ body, html {
 :root {
   --textColor: hsl(0, 0%, 98%);
   --textColorReverse: hsl(0, 0%, 2%);
+  --bgColor: hsl(0, 0%, 10%);
+  --numberColors: hsla(0, 0%, 2%, 0.15);
+  --mainColor: rgb(207, 146, 189);
+}
+
+p {margin: 0;}
+
+.lines {
+  position: relative;
+  background-color: var(--mainColor);
+  height: 4px;
+  width: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+  transition: all 1.2s ease-in-out;
+}
+.lines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: var(--mainColor);
+  filter: blur(10px);
+}
+.loadShow {
+  width: 100%;
 }
 
 #mainNav { 
@@ -21,7 +65,8 @@ body, html {
   backdrop-filter: blur(10px);
   border-radius: 10px;
   opacity: 0;
-  width: 1400px;
+  max-width: 1400px;
+  width: 90%;
   left: 50%;
   transform: translate(-50%, -30px);
   transition: transform .8s ease-in-out,  opacity .8s ease-in-out, background-color .3s ease-in-out;
@@ -45,7 +90,7 @@ body, html {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgb(224, 142, 169);
+  background-color: var(--mainColor);
   height: 3px;
   border-radius: 4px;
   transform: scaleX(0);
@@ -88,20 +133,74 @@ body, html {
   min-height: 100%;
   transform: translate(-50%, -50%);
   object-fit: cover;
+  will-change: transform;
+  opacity: 0;
   z-index: -1;
-  animation: videoFadeOut 61s ease-in infinite;
+  transition: opacity .2s ease-in-out;
 }
 
 .content {
-  position: relative;
+  position: absolute;
   color: var(--textColor);
   z-index: 1;
-  font-size: 2rem;
   text-align: center;
+  width: 700px;
   display: flex;
   flex-direction: column !important;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#mainText {
+  font-family: "Poppins", sans-serif;
+  font-size: 6rem;
+  font-weight: 600;
+}
+#heroSubText {
+    font-family: "Roboto", sans-serif;
+    font-size: 3rem;
+}
+
+#heroBtn {
+  border: none;
+  outline: none;
+  font-family: "Roboto" sans-serif;
+  font-size: 1.5rem;
+  border-radius: 6px;
+  opacity: 0;
+  padding: 5px 0;
+  margin-top: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--textColor);
+  backdrop-filter: blur(10px);
+  transform: translateY(-20px);
+  transition: background-color .2s ease-in-out;
+  animation: dropElement 1.3s forwards 3.5s;
+}
+#heroBtn:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.arrowDown {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  opacity: 0;
+  transform: translateX(-50%);
+  font-size: 2.25rem;
+  color: var(--textColor);
+  transition: all .3s ease-in-out;
+}
+.arrowShow {
+  opacity: 1;
+  animation: arrowDown 2s infinite forwards;
+}
+@keyframes arrowDown {
+  0% {transform: translate(0) translateX(-50%);}
+  25% {transform: translateY(-40px) translateX(-50%);}
+  26% {transform: translateY(-40px) translateX(-50%);}
+  50% {transform: translateY(0) translateX(-50%);}
+  100% {transform: translateY(0) translateX(-50%);}
 }
 
 .textLoad {
@@ -112,13 +211,9 @@ body, html {
 .letter {
   display: inline-block;
   opacity: 0;
-  transform: translateX(-20px) scale(0.8);
-  /*transition: all .2s ease-in-out;*/
-  animation: revealLetter 2.5s forwards;
-}/*
-.letter:hover {
-  font-weight: bold;
-}*/
+  transform: translateX(-30px) scale(0.7);
+  animation: revealLetter 2.2s forwards;
+}
 
 @keyframes revealLetter {
   to {
@@ -127,24 +222,18 @@ body, html {
   }
 }
 
-@keyframes videoFadeOut {
-    0% {
-        opacity: 0;
-    }
-    3% {
-        opacity: 1;
-    }
-    91% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+@keyframes dropElement {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .section2 {
-    height: 1000px;
-    background-color: hsl(0, 0%, 10%);
+    height: 800px;
+    width: 90%;
+    display: flex;
+    background-color: var(--bgColor);
 }
 
 h1 {
@@ -155,10 +244,91 @@ h1 {
 
 .dropScroll {
     opacity: 0;
-    transform: translateY(-40px);
-    transition: all .5s ease-in-out;
+    transform: translateY(-30px);
+    transition: all 1s ease-in-out;
 }
 .dropShow {
     opacity: 1;
     transform: translateY(0);
+}
+
+/*About page*/
+
+.mainMiddleTextCont, .middleTextCont {
+  height: 450px;
+}
+.middleTextCont {
+  position: relative;
+  background-color: var(--bgColor);
+}
+
+.middleTextCont h2, .middleTextCont h3 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) !important;
+  font-family: "Poppins", sans-serif;
+  left: 100px;
+}
+.middleTextCont h2 {
+  font-size: 7rem;
+  z-index: 2;
+  color: var(--mainColor);
+}
+.middleTextCont h3 {
+  font-size: 24rem;
+  color: var(--numberColors);
+}
+
+.aboutConts {
+  width: 50%;
+  height: 100%;
+  /*border: 2px solid white;*/
+}
+.texts {
+  font-size: 2.5rem;
+  opacity: 0;
+  filter: blur(8px);
+  transform: scale(0.9);
+  color: var(--textColor);
+  font-family: "Roboto";
+  transition: all .7s ease-in-out;
+}
+
+.fancyShow {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/*Prices Section*/
+
+.costCont {
+  background-color: white;
+  height: 600px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boxes {
+  position: relative;
+  height: 400px;
+  width: 400px;
+  color: var(--textColor);
+  background-color: var(--bgColor);
+  cursor: pointer;
+  transition: all .5s ease-in-out;
+}
+.boxes h2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.boxes:hover {
+  transform: translateY(-20px);
+}
+.middleTextCont2 h2, .middleTextCont2 h3 {
+  left: 50%;
 }
