@@ -1,1 +1,65 @@
-
+@media only screen and (max-width: 992px) {
+    .pricesCont, .boxCont .row { gap: 50px; }
+    .skillList { min-width: 85vw; }
+    .aboutList ul { padding: 0; }
+    .boxes { pointer-events: none; }
+    .optionCont, .optionCont::after { 
+        height: 90vw;
+        margin-inline: auto;
+        width: 90%;
+    }
+    .optionCont::after {
+        width: 100% !important;
+    }
+    .optionCont { margin-bottom: 40px; }
+    .mainTextsCont { height: 40vw; }
+    .middleTextCont h2 { font-size: 11vw; }
+    .middleTextCont h3 {
+        font-size: 32vw;
+        left: 80px;
+    }
+    #starsPicture { width: auto; }
+}
+@media only screen and (max-width: 768px) {
+    .navBtns {
+        display: none;
+    }
+    #mainText {
+        font-size: 12vw;
+    }
+    #heroSubText {
+        font-size: 6vw;
+    }
+    #heroBtn {
+        width: 80vw;
+        left: 50%;
+        transform: translate(-50%, -20px);
+    }
+    .starsInside {
+        width: 100%;
+        height: 60vh;
+        right: 0;
+        text-align: center;
+    }
+    .starsInside h3 {
+        margin: 30px 0 0 0;
+        font-size: 8vw;
+    }
+    .starsInside p {
+        font-size: 4vw;
+        margin: 50px 10%;
+    }
+    #starsBtn {
+        margin-inline: auto;
+        margin-bottom: 20px;
+        padding: 4px 16px;
+        font-size: 4vw;
+    }
+    .footerLeft {
+        text-align: left !important;
+    }
+    .mainFooterText {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+}

@@ -7,6 +7,38 @@ body, html {
   scrollbar-color: #d8d8d8 #1e1e1e;
 }
 
+/*Lenis scroll*/
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.row {
+  max-width: 2200px;
+  margin: auto;
+}
+
 /*Scrollbar*/
 
 ::-webkit-scrollbar {
@@ -27,10 +59,13 @@ body, html {
 
 :root {
   --textColor: hsl(0, 0%, 98%);
+  --lightTextColor: hsl(0, 0%, 80%);
   --textColorReverse: hsl(0, 0%, 2%);
   --bgColor: hsl(0, 0%, 10%);
+  --bgColorDark: hsl(0, 0%, 8%);
   --numberColors: hsla(0, 0%, 2%, 0.15);
   --mainColor: rgb(207, 146, 189);
+  --mainColorHover: rgb(226, 128, 195);
 }
 
 p {margin: 0;}
@@ -40,7 +75,7 @@ p {margin: 0;}
   background-color: var(--mainColor);
   height: 4px;
   width: 0;
-  margin: 20px 0;
+  margin: 30px 0;
   border-radius: 4px;
   transition: all 1.2s ease-in-out;
 }
@@ -59,16 +94,18 @@ p {margin: 0;}
 }
 
 #mainNav { 
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -30px);
   margin-top: 10px;
   background-color: hsla(0, 0%, 0%, 0.1);
+  z-index: 9;
   backdrop-filter: blur(10px);
   border-radius: 10px;
   opacity: 0;
   max-width: 1400px;
-  width: 90%;
-  left: 50%;
-  transform: translate(-50%, -30px);
+  width: 90vw;
   transition: transform .8s ease-in-out,  opacity .8s ease-in-out, background-color .3s ease-in-out;
 }
 #mainNav:hover {
@@ -82,6 +119,7 @@ p {margin: 0;}
 }
 .navBtns {
   position: relative;
+  z-index: 10;
   transition: all .2s ease-in-out;
 }
 .navBtns::after {
@@ -129,8 +167,8 @@ p {margin: 0;}
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
   transform: translate(-50%, -50%);
   object-fit: cover;
   will-change: transform;
@@ -163,20 +201,42 @@ p {margin: 0;}
 }
 
 #heroBtn {
-  border: none;
-  outline: none;
-  font-family: "Roboto" sans-serif;
-  font-size: 1.5rem;
+  position: absolute;
+  left: 50%;
   border-radius: 6px;
   opacity: 0;
-  padding: 5px 0;
+  height: 50px;
+  width: 100%;
   margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   background-color: rgba(0, 0, 0, 0.2);
   color: var(--textColor);
   backdrop-filter: blur(10px);
-  transform: translateY(-20px);
+  transform: translate(-50%, -20px);
   transition: background-color .2s ease-in-out;
   animation: dropElement 1.3s forwards 3.5s;
+}
+#heroBtn h3, #arrowRight {
+  font-size: 1.5rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Roboto" sans-serif;
+  margin: 0;
+  transition: all .4s ease-in-out;
+}
+.H3Show {
+  transform: translate(-10px, -50%) !important;
+}
+#arrowRight {
+  opacity: 0;
+  transform: translate(-15px, -45%);
+}
+.arrowRightShow {
+  opacity: 1 !important;
+  transform: translate(6px, -45%) !important;
 }
 #heroBtn:hover {
   background-color: rgba(0, 0, 0, 0.4);
@@ -225,14 +285,14 @@ p {margin: 0;}
 @keyframes dropElement {
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }
 
 .section2 {
-    height: 800px;
+    position: relative;
+    width: 100%;
     width: 90%;
-    display: flex;
     background-color: var(--bgColor);
 }
 
@@ -254,20 +314,25 @@ h1 {
 
 /*About page*/
 
-.mainMiddleTextCont, .middleTextCont {
-  height: 450px;
-}
-.middleTextCont {
+.mainTextsCont {
   position: relative;
+  height: 450px;
   background-color: var(--bgColor);
 }
+
+.middleTextCont {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 80vw;
+}
+.middleTextCont { left: 10%; }
 
 .middleTextCont h2, .middleTextCont h3 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%) !important;
   font-family: "Poppins", sans-serif;
-  left: 100px;
 }
 .middleTextCont h2 {
   font-size: 7rem;
@@ -276,16 +341,16 @@ h1 {
 }
 .middleTextCont h3 {
   font-size: 24rem;
+  left: 80px;
   color: var(--numberColors);
 }
 
 .aboutConts {
-  width: 50%;
   height: 100%;
   /*border: 2px solid white;*/
 }
 .texts {
-  font-size: 2.5rem;
+  font-size: 2rem;
   opacity: 0;
   filter: blur(8px);
   transform: scale(0.9);
@@ -300,15 +365,155 @@ h1 {
   transform: scale(1);
 }
 
+.aboutList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.skillList {
+  position: relative;
+  background-color: black;
+  min-width: 35vw;
+  max-width: 600px;
+  height: 70px;
+  list-style-type: none;
+  border-radius: 6px;
+  margin: 50px 0;
+  transition: all .7s ease-in-out;
+}
+.skillList h5 {
+  position: absolute;
+  font-family: "Poppins";
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray;
+  left: 25px;
+  font-size: 1.5rem;
+  transition: all .4s ease-in-out;
+}
+.skillListShow h5 {
+  color: black;
+}
+.skillList::before {
+    content: "";
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: left;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: inherit;
+    z-index: -1;
+    background-color: white;
+    transition: all 1.2s ease-in-out;
+}
+.skillListShow::before, .skillListShow:focus::before {
+    transform: scaleX(1);
+}
+
+.starsCont {
+  position: relative;
+  width: auto;
+  height: 100vh;
+  overflow: hidden;
+  left: 0;
+  margin: 20px 0;
+}
+#starsPicture {
+  position: absolute;
+  transform: scale(2);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  opacity: 1;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.starsInside {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  right: 80px;
+  bottom: 0;
+  height: 100%;
+  z-index: 1;
+  width: 600px;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.starsInside h3 {
+  margin: 0 50px;
+  font-size: 2.75rem;
+  color: var(--textColor);
+  font-family: "Poppins";
+}
+.starsInside p {
+  margin: 50px 20px 50px 80px;
+  font-size: 1.5rem;
+  color: var(--lightTextColor);
+  font-family: "Roboto";
+}
+#starsBtn {
+  position: relative;
+  background-color: white;
+  color: var(--textColorReverse);
+  padding: 5px 20px;
+  margin: 0 45px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  font-family: "Poppins";
+  width: fit-content;
+  transition: all .3s ease-in-out;
+}
+
+#starsBtn span {
+  position: relative;
+  z-index: 1;
+}
+
+#starsBtn::after {
+  content: "";
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  background-color: var(--bgColor);
+  transition: all .3s ease-in-out;
+}
+#starsBtn:hover {
+  color: var(--textColor);
+}
+#starsBtn:hover::after {
+  transform: scaleX(1);
+}
+
 /*Prices Section*/
 
-.costCont {
-  background-color: white;
-  height: 600px;
-  padding: 0;
+.cards {
+  position: relative;
+  margin: auto;
+  padding: 40px;
+  height: fit-content;
+  background-color: var(--bgColorDark);
+  border-radius: 12px;
+  transition: background-color .3s ease-in-out, transform 1.4s, opacity 1.4s;
+}
+
+.boxCont .row {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
+  margin-bottom: 60px;
 }
 
 .boxes {
@@ -316,19 +521,335 @@ h1 {
   height: 400px;
   width: 400px;
   color: var(--textColor);
-  background-color: var(--bgColor);
+  background-color: var(--bgColorDark);
   cursor: pointer;
   transition: all .5s ease-in-out;
 }
 .boxes h2 {
   position: absolute;
   left: 50%;
+  font-family: "Roboto";
+  white-space: nowrap;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .boxes:hover {
   transform: translateY(-20px);
 }
-.middleTextCont2 h2, .middleTextCont2 h3 {
+.icons {
+  position: absolute;
+  font-size: 3.5rem;
+  color: var(--mainColor);
   left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  top: 20%;
+  opacity: 1;
+  transition: all .4s ease-in-out;
 }
+
+.priceCont {
+  background-color: var(--bgColor);
+}
+
+.optionCont {
+  height: 35vw;
+  position: relative;
+  border-left: 20px solid var(--bgColor);
+  border-right: 20px solid var(--bgColor);
+}
+.optionTextCont {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+  color: var(--textColor);
+  transition: all .5s ease-in-out;
+}
+.optionTextCont.visible {
+  bottom: 14%;
+}
+.optionTextCont h3 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  font-family: "Poppins" sans-serif;
+}
+.optionTextCont h4 {
+  font-size: 2.25rem;
+  font-weight: 600;
+  font-family: "Roboto" sans-serif;
+}
+.boxBtns {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translate(-50%, 50px) scale(0.8);
+  opacity: 0;
+  background-color: transparent;
+  color: var(--textColor);
+  font-size: 1.25rem;
+  font-weight: 500;
+  z-index: 2;
+  font-family: "Poppins" sans-serif;
+  padding: 5px 20px;
+  transition: all .5s ease-in-out;
+}
+.boxBtns.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.boxBtns::after {
+  content: "";
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  background-color: var(--textColor);
+  transition: all .3s ease-in-out;
+}
+.boxBtns:hover {
+  color: var(--bgColorDark);
+}
+.boxBtns:hover::after {
+  transform: scaleX(1);
+}
+
+.options {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+.optionCont::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.2;
+  width: 100%;
+  height: 35vw;
+  z-index: 1;
+  transition: all .4s ease-in-out;
+}
+.optionCont:hover::after {
+  opacity: 0.4;
+}
+
+/*Contact section*/
+
+.contactCont {
+    position: relative;
+    display: flex;
+    height: fit-content;
+    margin-bottom: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+.middleCont {
+    position: relative;
+    width: 80vw;
+    max-width: 1200px;
+    align-items: center;
+    padding: 40px;
+    color: var(--textColor);
+    border-radius: 15px;
+    background-color: var(--bgColorDark);
+}
+.middleCont h1 {
+  margin-bottom: 30px;
+  font-size: 3rem;
+  font-family: "Poppins" sans-serif;
+}
+.middleCont p {
+  font-size: 1.75rem;
+  color: var(--lightTextColor);
+  font-family: "Roboto" sans-serif;
+  line-height: 1.2;
+}
+
+
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 8px;
+  background-color: var(--bgColor);
+  color: var(--textColor);
+  outline: none;
+  font-family: "Roboto" sans-serif;
+  font-size: 1.5rem;
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-radius: 6px;
+  transition: border .2s ease-in-out;
+}
+.input-wrapper input:focus {
+  border-bottom: 2px solid var(--mainColor);
+}
+
+.input-wrapper label {
+  position: absolute;
+  color: var(--textColor);
+  left: 10px;
+  top: 12px;
+  background: transparent;
+  padding: 0 4px;
+  color: #aaa;
+  font-size: 1.5rem;
+  pointer-events: none;
+  transition: 0.2s ease-in-out all;
+}
+
+.input-wrapper input:focus + label,
+.input-wrapper input:not(:placeholder-shown) + label {
+  top: -16px;
+  left: 10px;
+  font-size: 1.25rem;
+  color: var(--inputLabelFocus);
+}
+
+.input-wrapper input::placeholder {
+  color: transparent;
+}
+
+#text {
+    font-size: 1.5rem;
+    padding: 15px;
+    width: 100%;
+    height: 300px;
+    color: var(--textColor);
+    outline: none;
+    background-color: var(--bgColor);
+    font-family: "Roboto" sans-serif;
+    border: 2px solid rgba(0, 0, 0, 0);
+    resize: none;
+    border-radius: 6px;
+    margin-bottom: 55px;
+    transition: border .2s ease-in-out;
+}
+#text:focus {
+    border-bottom: 2px solid var(--mainColor);
+}
+#text::placeholder {
+  font-family: "Roboto" sans-serif;
+    color: hsl(0, 0%, 64%);
+    font-size: 1.5rem;
+}
+#submit {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    font-size: 1.5rem;
+    font-family: "Poppins" sans-serif;
+    font-weight: 500;
+    padding: 3px 24px;
+    outline: none;
+    border: none;
+    z-index: 1;
+    border-radius: 4px;
+    color: hsl(0, 0%, 64%);
+    background-color: var(--bgColor);
+    transition: color .2s ease-in-out;
+}
+#submit::after {
+    content: "";
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: left;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--textColor);
+    transition: all .3s ease-in-out;
+}
+#submit:hover {
+  color: black;
+}
+#submit:hover::after, #submit:focus::after {
+    transform: scaleX(1);
+}
+
+.contactUl {
+    display: flex;
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+    gap: 40px;
+}
+.contactIcons {
+    position: relative;
+    color: var(--lightTextColor);
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+.contactIcons:hover {
+    color: var(--mainColor);
+}
+.contactIcons::after, .contactIcons::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    transform: scaleX(0);
+    border-radius: 4px;
+    background-color: var(--mainColor);
+    transition: all .2s ease-in-out;
+}
+.contactIcons:hover::after {
+    transform: scaleX(1);
+}
+
+
+/*Footer*/
+
+.footer {
+      background-color: var(--bgColorDark);
+      color: #ffffff;
+      padding: 40px 0;
+    }
+    .footer a {
+      color: #ffffff;
+      font-family: "Poppins" sans-serif;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    .footer .social-icons a {
+      margin-right: 15px;
+      font-size: 1.2rem;
+      font-family: "Poppins" sans-serif;
+      color: #ffffff;
+    }
+    .footer .social-icons a:hover {
+      color: #adb5bd;
+    }
+
+    .mainFooterText {
+      font-family: "Poppins" sans-serif;
+      font-weight: 600;
+    }

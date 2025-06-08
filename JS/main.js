@@ -1,17 +1,39 @@
-//Smooth Parallax
+document.addEventListener("DOMContentLoaded", () => {
+
+const lenis = new Lenis({
+  duration: 1.4,
+  easing: t => t * (2 - t),
+  smooth: true,
+  smoothTouch: false
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
 
 let latestScrollTop = 0;
 let ticking = false;
-window.addEventListener('scroll', function () {
+
+window.addEventListener('scroll', () => {
   latestScrollTop = window.scrollY || window.pageYOffset;
   requestTick();
 });
+
 function requestTick() {
   if (!ticking) {
-    requestAnimationFrame(updateParallax);
+    requestAnimationFrame(() => {
+      updateParallax();
+      updateStarScale();
+      ticking = false;
+    });
     ticking = true;
   }
 }
+
+
 function updateParallax() {
   const scrollTop = latestScrollTop;
   const fadeDistance = 800;
@@ -30,8 +52,32 @@ function updateParallax() {
   ticking = false;
 }
 
-  
-  document.addEventListener("DOMContentLoaded", () => {
+//Stars Scale Animation
+ function updateStarScale() {
+  const scrollTop = latestScrollTop;
+
+  const stars = document.getElementById('starsPicture');
+  const container = document.querySelector('.starsCont');
+
+  if (stars && container) {
+    const rect = container.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Calculate scroll progress
+    const visibleDistance = windowHeight + rect.height;
+    const scrollDistance = windowHeight - rect.top;
+
+    const progress = Math.min(1, Math.max(0, scrollDistance / visibleDistance));
+
+    // Scale from 2 to 1.25
+    const scale = 2 - (progress * 0.75);
+
+    stars.style.transform = `scale(${scale})`;
+  }
+
+  ticking = false;
+}
+
 
     if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'; 
@@ -59,11 +105,61 @@ function updateParallax() {
         }
       });
 
+    //Navbar
     const navbar = document.getElementById("mainNav");
     setTimeout(() => {
       navbar.style.transform = "translate(-50%, 0)";
       navbar.style.opacity = "1";
     }, 2200);
+    let lastScrollY = window.scrollY;
+
+    function handleScrollDirection() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        navbar.style.transform = 'translate(-50%, -50px)';
+        navbar.style.opacity = "0";
+      } else {
+        navbar.style.transform = 'translate(-50%, 0)';
+        navbar.style.opacity = "1";
+      }
+
+      lastScrollY = currentScrollY;
+    }
+
+    const cardIcons = document.querySelectorAll(".cardIcons");
+    cardIcons.forEach(cardIcon => {
+      cardIcon.parentElement.addEventListener("mouseover", () => {
+        cardIcon.style.color = "var(--mainColorHover)";
+      })
+      cardIcon.parentElement.addEventListener("mouseleave", () => {
+        cardIcon.style.color = "var(--mainColor)";
+      })
+    })
+
+// Optional: debounce or throttle this for performance
+window.addEventListener('scroll', handleScrollDirection);
+
+const boxBtns = document.querySelectorAll(".boxBtns");
+boxBtns.forEach(boxBtn => {
+  boxBtn.parentElement.addEventListener("mouseover", () => {
+    boxBtn.classList.add("visible");
+  })
+  boxBtn.parentElement.addEventListener("mouseleave", () => {
+    boxBtn.classList.remove("visible");
+  })
+})
+
+const optionTextCont = document.querySelectorAll(".optionTextCont");
+optionTextCont.forEach(optionTextC => {
+  optionTextC.parentElement.addEventListener("mouseover", () => {
+    optionTextC.classList.add("visible");
+  })
+  optionTextC.parentElement.addEventListener("mouseleave", () => {
+    optionTextC.classList.remove("visible");
+  })
+})
+
 
     /*Text Loading From Left Side Animation*/
 
@@ -80,16 +176,17 @@ function updateParallax() {
         });
       });
 
+
     /*Scroll Animation*/
 
     const dropElements = document.querySelectorAll(".dropScroll");
     const observer2 = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && entry.intersectionRatio >= 1) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
                 entry.target.classList.add("dropShow");
             }
         });
-    }, { threshold: 1 });
+    }, { threshold: 0.7 });
 
     dropElements.forEach(dropElement => observer2.observe(dropElement));
 
@@ -137,13 +234,41 @@ function updateParallax() {
     const texts = document.querySelectorAll(".texts");
     const observer5 = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && entry.intersectionRatio >= 1) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
                 entry.target.classList.add("fancyShow");
+            }
+        });
+    }, { threshold: 0.5 });
+
+    texts.forEach(text => observer5.observe(text));
+
+
+    const skillList = document.querySelectorAll(".skillList");
+    const observer6 = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio >= 1) {
+              setTimeout(() => {
+                entry.target.classList.add("skillListShow");
+              }, 1200);
             }
         });
     }, { threshold: 1 });
 
-    texts.forEach(text => observer5.observe(text));
+    skillList.forEach(skill => observer6.observe(skill));
+
+
+    const heroBtn = document.getElementById("heroBtn");
+    const arrowRight = document.getElementById("arrowRight");
+    const heroBtnH3 = document.getElementById("heroBtnH3");
+    heroBtn.addEventListener("mouseover", () => {
+      arrowRight.classList.add("arrowRightShow");
+      heroBtnH3.classList.add("H3Show");
+    });
+    heroBtn.addEventListener("mouseleave", () => {
+      arrowRight.classList.remove("arrowRightShow");
+      heroBtnH3.classList.remove("H3Show");
+    });
+
   })
 
 //Arrow Down
@@ -172,4 +297,3 @@ window.addEventListener('scroll', () => {
 
   clearTimeout(arrowTimeout);
 });
-
